@@ -7,12 +7,12 @@
 <i> [webpack-dev-server] On Your Network (IPv4): http://172.17.0.2:3000/
 <i> [webpack-dev-server] Content not from webpack is served from './public' directory
 Injecting EditorRootWrapper import: ../.ve/EditorRootWrapper
-asset bundle.js 1.46 MiB [emitted] (name: main)
+asset bundle.js 1.47 MiB [emitted] (name: main)
 asset index.html 1.98 KiB [emitted]
 runtime modules 27.5 KiB 14 modules
 modules by path ./node_modules/ 1.3 MiB 42 modules
-modules by path ./src/ 11.1 KiB
-  modules by path ./src/*.js 8 KiB 4 modules
+modules by path ./src/ 13.3 KiB
+  modules by path ./src/*.js 10.3 KiB 4 modules
   modules by path ./src/*.css 3.08 KiB
     ./src/index.css 2.23 KiB [built] [code generated]
     ./node_modules/css-loader/dist/cjs.js!./src/index.css 875 bytes [built] [code generated]
@@ -22,44 +22,26 @@ modules by path ./.ve/ 15.1 KiB
     ./.ve/EditorOverlay.css 2.25 KiB [built] [code generated]
     ./node_modules/css-loader/dist/cjs.js!./.ve/EditorOverlay.css 697 bytes [built] [code generated]
   ./.ve/EditorOverlay.jsx 1.58 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 1311 ms
+webpack 5.99.9 compiled successfully in 1349 ms
 assets by status 1.98 KiB [cached] 1 asset
-assets by path *.js 1.46 MiB
-  asset bundle.js 1.46 MiB [emitted] (name: main)
-  asset main.54be84159a159806c7a4.hot-update.js 854 bytes [emitted] [immutable] [hmr] (name: main)
-asset main.54be84159a159806c7a4.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 1.46 MiB = bundle.js 1.46 MiB main.54be84159a159806c7a4.hot-update.js 854 bytes
-cached modules 1.32 MiB [cached] 52 modules
-runtime modules 27.5 KiB 14 modules
-./src/JournalingScreen.js 5.27 KiB [built]
-webpack 5.99.9 compiled successfully in 80 ms
-assets by status 1.98 KiB [cached] 1 asset
-assets by path *.js 1.47 MiB
-  asset bundle.js 1.46 MiB [emitted] (name: main)
-  asset main.7a8af1a95ff706edb80f.hot-update.js 9.08 KiB [emitted] [immutable] [hmr] (name: main)
-asset main.7a8af1a95ff706edb80f.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 1.47 MiB = bundle.js 1.46 MiB main.7a8af1a95ff706edb80f.hot-update.js 9.08 KiB
-cached modules 1.32 MiB [cached] 52 modules
-runtime modules 27.5 KiB 14 modules
-./src/JournalingScreen.js 5.95 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 57 ms
-assets by status 1.98 KiB [cached] 1 asset
-assets by path *.js 1.47 MiB
+assets by path *.js 1.49 MiB
   asset bundle.js 1.47 MiB [emitted] (name: main)
-  asset main.4b6d7b4801de02d875a9.hot-update.js 9.55 KiB [emitted] [immutable] [hmr] (name: main)
-asset main.4b6d7b4801de02d875a9.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 1.47 MiB = bundle.js 1.47 MiB main.4b6d7b4801de02d875a9.hot-update.js 9.55 KiB
+  asset main.0da30ac9702c57f640b2.hot-update.js 15.9 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.0da30ac9702c57f640b2.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 1.49 MiB = bundle.js 1.47 MiB main.0da30ac9702c57f640b2.hot-update.js 15.9 KiB
 cached modules 1.32 MiB [cached] 52 modules
 runtime modules 27.5 KiB 14 modules
-./src/JournalingScreen.js 6.34 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 68 ms
+javascript modules 10.6 KiB
+  ./src/JournalingScreen.js 7.58 KiB [built] [code generated]
+  ./src/Navbar.js 3.05 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 99 ms
 assets by status 1.98 KiB [cached] 1 asset
 assets by path *.js 1.48 MiB
   asset bundle.js 1.47 MiB [emitted] (name: main)
-  asset main.4bf3c4aca42a3f03f366.hot-update.js 10.8 KiB [emitted] [immutable] [hmr] (name: main)
-asset main.4bf3c4aca42a3f03f366.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 1.48 MiB = bundle.js 1.47 MiB main.4bf3c4aca42a3f03f366.hot-update.js 10.8 KiB
-cached modules 1.32 MiB [cached] 52 modules
+  asset main.7f8fa0c816fefd8b134a.hot-update.js 11.4 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.7f8fa0c816fefd8b134a.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 1.48 MiB = bundle.js 1.47 MiB main.7f8fa0c816fefd8b134a.hot-update.js 11.4 KiB
+cached modules 1.33 MiB [cached] 53 modules
 runtime modules 27.5 KiB 14 modules
-./src/JournalingScreen.js 7.53 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 60 ms
+./src/JournalingScreen.js 7.86 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 74 ms

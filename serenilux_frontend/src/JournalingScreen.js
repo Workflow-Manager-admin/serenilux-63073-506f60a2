@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled, { keyframes, css } from "styled-components";
 import MotivationalText from "./MotivationalText";
+import Navbar, { NAVBAR_HEIGHT } from "./Navbar";
 
 /*
   PUBLIC_INTERFACE
@@ -261,36 +262,39 @@ export default function JournalingScreen() {
   };
 
   return (
-    <Background>
-      <Card className={shredded ? "fadeout" : ""}>
-        <TextareaWrapper>
-          <AnimatedTextarea
-            ref={textareaRef}
-            value={text}
-            aria-label="Journaling area"
-            onChange={e => setText(e.target.value)}
-            spellCheck={true}
+    <>
+      <Navbar />
+      <Background style={{ paddingTop: NAVBAR_HEIGHT }}>
+        <Card className={shredded ? "fadeout" : ""}>
+          <TextareaWrapper>
+            <AnimatedTextarea
+              ref={textareaRef}
+              value={text}
+              aria-label="Journaling area"
+              onChange={e => setText(e.target.value)}
+              spellCheck={true}
+              disabled={shredded}
+            />
+            {/* Custom animated placeholder */}
+            <FadeInPlaceholder
+              show={showPlaceholder}
+              aria-hidden="true"
+            >
+              {"Type what’s bothering you…"}
+            </FadeInPlaceholder>
+          </TextareaWrapper>
+          <MotivationalText />
+          {/* Shred It Button placed below quote */}
+          <ShredItButton
+            onClick={handleShred}
             disabled={shredded}
-          />
-          {/* Custom animated placeholder */}
-          <FadeInPlaceholder
-            show={showPlaceholder}
-            aria-hidden="true"
+            tabIndex={shredded ? -1 : 0}
+            aria-label="Shred your journal entry"
           >
-            {"Type what’s bothering you…"}
-          </FadeInPlaceholder>
-        </TextareaWrapper>
-        <MotivationalText />
-        {/* Shred It Button placed below quote */}
-        <ShredItButton
-          onClick={handleShred}
-          disabled={shredded}
-          tabIndex={shredded ? -1 : 0}
-          aria-label="Shred your journal entry"
-        >
-          Shred It
-        </ShredItButton>
-      </Card>
-    </Background>
+            Shred It
+          </ShredItButton>
+        </Card>
+      </Background>
+    </>
   );
 }
