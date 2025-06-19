@@ -56,7 +56,22 @@ const Background = styled.div`
   animation: ${gradientAnimation} 12s ease-in-out infinite;
 `;
 
-// Card container
+/**
+ * Card container: Fades out when .fadeout is applied.
+ */
+const fadeOut = keyframes`
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0px);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.98) translateY(32px);
+    filter: blur(4px);
+  }
+`;
+
 const Card = styled.div`
   background: rgba(255, 255, 255, 0.22);
   box-shadow: 0 4px 32px 0 rgba(60, 60, 100, 0.10), 0 1.5px 4px 0 rgba(100,120,190,0.09);
@@ -74,6 +89,12 @@ const Card = styled.div`
   justify-content: center;
   align-items: center;
   transition: box-shadow 0.23s cubic-bezier(.76,0,.24,1);
+
+  /* Fadeout animation */
+  &.fadeout {
+    animation: ${fadeOut} 0.85s cubic-bezier(0.65, 0, 0.36, 1) forwards;
+    pointer-events: none;
+  }
 
   @media (max-width: 600px) {
     padding: 1.15rem 0.6rem;
@@ -155,6 +176,57 @@ const AnimatedTextarea = styled.textarea`
   }
 `;
 
+/**
+ * Shred It Button styling with soft glow on hover/focus.
+ */
+const ShredItButton = styled.button`
+  margin-top: 28px;
+  min-width: 128px;
+  min-height: 44px;
+  padding: 0.6em 1.7em;
+  border: none;
+  font-size: 1.13rem;
+  font-family: inherit;
+  font-weight: 600;
+  border-radius: 999px;
+  background: linear-gradient(100deg, #4A90E2 45%, #50E3C2 98%);
+  color: #fff;
+  box-shadow: 0 2px 16px 0 rgba(80, 227, 194, 0.14), 0 0px 1px 0 #e8e8fa;
+  cursor: pointer;
+  outline: none;
+  letter-spacing: 0.01em;
+  transition: 
+    box-shadow 0.22s cubic-bezier(.6,.1,.34,1),
+    filter 0.20s cubic-bezier(.42,0,1,1),
+    background 0.18s,
+    color 0.15s;
+  position: relative;
+  z-index: 1;
+
+  &:hover,
+  &:focus-visible {
+    box-shadow: 0 0 12px 2px #A7E3FA, 0 3px 33px 0 #50E3C2bb;
+    filter: brightness(1.04) saturate(120%) drop-shadow(0 0 12px #F5A62355);
+    background: linear-gradient(100deg, #50E3C2 45%, #4A90E2 98%);
+    color: #fff;
+  }
+  &:active {
+    filter: brightness(0.97);
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.53;
+    pointer-events: none;
+  }
+
+  @media (max-width: 600px) {
+    min-height: 38px;
+    font-size: 1rem;
+    margin-top: 13px;
+    padding: 0.5em 1.05em;
+  }
+`;
+
 // Container for positioning placeholder over textarea
 const TextareaWrapper = styled.div`
   position: relative;
@@ -169,6 +241,9 @@ export default function JournalingScreen() {
   const [text, setText] = useState("");
   const textareaRef = useRef();
 
+  // Animation state for fade-out on "Shred It" click
+  const [shredded, setShredded] = useState(false);
+
   // Animate placeholder fade-in on mount
   useEffect(() => {
     // fade-in after slight delay for calming effect
@@ -179,22 +254,25 @@ export default function JournalingScreen() {
   // Hide placeholder once user starts typing or textarea has value
   const showPlaceholder = placeholderVisible && text.length === 0;
 
+  // Handler for "Shred It" button
+  const handleShred = () => {
+    setShredded(true);
+    // Optionally, clear textarea or do more after fade-out (not required in prompt)
+  };
+
   return (
     <Background>
-      <Card>
+      <Card className={shredded ? "fadeout" : ""}>
         <TextareaWrapper>
           <AnimatedTextarea
             ref={textareaRef}
             value={text}
-            // aria-label for accessibility
             aria-label="Journaling area"
             onChange={e => setText(e.target.value)}
             spellCheck={true}
+            disabled={shredded}
           />
-          {/*
-            Custom animated placeholder for fade-in and softer look,
-            not the native HTML placeholder!
-          */}
+          {/* Custom animated placeholder */}
           <FadeInPlaceholder
             show={showPlaceholder}
             aria-hidden="true"
@@ -202,6 +280,16 @@ export default function JournalingScreen() {
             {"Type what’s bothering you…"}
           </FadeInPlaceholder>
         </TextareaWrapper>
+        <MotivationalText />
+        {/* Shred It Button placed below quote */}
+        <ShredItButton
+          onClick={handleShred}
+          disabled={shredded}
+          tabIndex={shredded ? -1 : 0}
+          aria-label="Shred your journal entry"
+        >
+          Shred It
+        </ShredItButton>
       </Card>
     </Background>
   );
