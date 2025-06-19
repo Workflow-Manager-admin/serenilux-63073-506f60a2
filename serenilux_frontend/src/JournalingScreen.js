@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled, { keyframes, css } from "styled-components";
+import MotivationalText from "./MotivationalText";
 
 /*
   PUBLIC_INTERFACE
