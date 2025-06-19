@@ -1,13 +1,14 @@
-import React from "react";
-import styled, { keyframes } from "styled-components";
+import React, { useRef, useEffect, useState } from "react";
+import styled, { keyframes, css } from "styled-components";
 
 /*
   PUBLIC_INTERFACE
   JournalingScreen
   A full viewport, mobile-first layout featuring:
     - a background with a smoothly animated gradient,
-    - a flex-centered, glassmorphic card container.
-  This is a presentational scaffold for future content.
+    - a flex-centered, glassmorphic card container,
+    - a large textarea for journaling with calming animated placeholder
+      and scale-up microanimation on focus.
 */
 
 const gradientAnimation = keyframes`
@@ -22,7 +23,18 @@ const gradientAnimation = keyframes`
   }
 `;
 
-// The animated background container covers the viewport.
+// Fade-in animation for placeholder
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 const Background = styled.div`
   min-height: 100vh;
   width: 100vw;
@@ -43,7 +55,7 @@ const Background = styled.div`
   animation: ${gradientAnimation} 12s ease-in-out infinite;
 `;
 
-// Glassmorphic card: supports flex/grid for future content.
+// Card container
 const Card = styled.div`
   background: rgba(255, 255, 255, 0.22);
   box-shadow: 0 4px 32px 0 rgba(60, 60, 100, 0.10), 0 1.5px 4px 0 rgba(100,120,190,0.09);
@@ -69,11 +81,127 @@ const Card = styled.div`
   }
 `;
 
+// The animated placeholder text - not native placeholder, to allow animation
+const FadeInPlaceholder = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 26px 24px 18px 26px;
+  pointer-events: none;
+  font-size: 1.13rem;
+  line-height: 1.8;
+  color: #97b4c9;
+  opacity: 0.77;
+  transition: opacity 0.2s;
+  user-select: none;
+  white-space: pre-wrap;
+
+  ${({ show }) =>
+    show &&
+    css`
+      animation: ${fadeIn} 0.9s cubic-bezier(.4,0,.22,1);
+      opacity: 1;
+    `
+  };
+
+  @media (max-width: 600px) {
+    padding: 20px 14px 12px 15px;
+    font-size: 0.98rem;
+  }
+`;
+
+// Responsive, animated textarea
+const AnimatedTextarea = styled.textarea`
+  width: 100%;
+  min-height: 180px;
+  max-height: 260px;
+  font-size: 1.11rem;
+  color: #234870;
+  background: rgba(255,255,255,0.72);
+  border: 1.5px solid rgba(74,144,226,0.13);
+  border-radius: 14px;
+  padding: 26px 24px 18px 26px;
+  outline: none;
+  resize: vertical;
+  font-family: inherit;
+  font-weight: 426;
+  box-shadow: 0 4px 28px 0 rgba(100, 190, 225, 0.10);
+  transition: 
+    transform 0.22s cubic-bezier(.76,0,.24,1), 
+    box-shadow 0.22s cubic-bezier(.76,0,.24,1);
+
+  /* Scale up and stronger shadow on focus */
+  &:focus {
+    transform: scale(1.015);
+    box-shadow: 0 2px 34px 2px rgba(100, 180, 225, 0.17);
+    border: 1.6px solid #97b4c9;
+    background: rgba(255,255,255,0.86);
+  }
+
+  /* Hide scrollbar on webkit for a softer look */
+  &::-webkit-scrollbar {
+    width: 0.36em;
+    background: transparent;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 0.98rem;
+    min-height: 105px;
+    max-height: 160px;
+    padding: 20px 14px 12px 15px;
+  }
+`;
+
+// Container for positioning placeholder over textarea
+const TextareaWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+`;
+
 export default function JournalingScreen() {
-  // No content for now, just card background
+  // state to handle fade-in placeholder
+  const [placeholderVisible, setPlaceholderVisible] = useState(false);
+  const [text, setText] = useState("");
+  const textareaRef = useRef();
+
+  // Animate placeholder fade-in on mount
+  useEffect(() => {
+    // fade-in after slight delay for calming effect
+    const timeout = setTimeout(() => setPlaceholderVisible(true), 130);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  // Hide placeholder once user starts typing or textarea has value
+  const showPlaceholder = placeholderVisible && text.length === 0;
+
   return (
     <Background>
-      <Card>{/* Future journaling UI goes here */}</Card>
+      <Card>
+        <TextareaWrapper>
+          <AnimatedTextarea
+            ref={textareaRef}
+            value={text}
+            // aria-label for accessibility
+            aria-label="Journaling area"
+            onChange={e => setText(e.target.value)}
+            spellCheck={true}
+          />
+          {/*
+            Custom animated placeholder for fade-in and softer look,
+            not the native HTML placeholder!
+          */}
+          <FadeInPlaceholder
+            show={showPlaceholder}
+            aria-hidden="true"
+          >
+            {"Type what’s bothering you…"}
+          </FadeInPlaceholder>
+        </TextareaWrapper>
+      </Card>
     </Background>
   );
 }
